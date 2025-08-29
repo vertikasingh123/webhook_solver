@@ -1,36 +1,65 @@
-# webhook-solver
+# 🚀 Webhook Solver (Spring Boot)
 
-Spring Boot app that on startup:
-1. Calls the `generateWebhook` endpoint to get a webhook URL and accessToken.
-2. Chooses the SQL (Question 1 or Question 2) based on last two digits of `regNo`.
-3. Saves the final SQL locally.
-4. Submits the final SQL to `testWebhook` endpoint with the `Authorization` header set to the accessToken.
+This is a **Spring Boot** application that:
 
-## How to build
+1. On startup, sends a `POST` request to generate a webhook (with your `regNo`, name, and email).  
+2. Receives a `webhook` URL + `accessToken`.  
+3. Chooses the correct SQL query (Question 1 if regNo last 2 digits are odd, Question 2 if even).  
+4. Saves the query locally in an `output/` folder.  
+5. Submits the final SQL query to the `testWebhook` endpoint with `Authorization: <accessToken>`.
 
-Requirements:
+---
+
+## 📂 Project Structure
+pom.xml # Maven build file
+README.md # This guide
+/src/main/java/com/example/webhooksolver
+├── WebhookSolverApplication.java # Spring Boot main class
+├── config/RestConfig.java # RestTemplate bean
+├── model/
+│ ├── GenerateWebhookRequest.java # Request DTO
+│ └── GenerateWebhookResponse.java# Response DTO
+└── runner/StartupRunner.java # Main logic on startup
+/src/main/resources/
+└── application.properties # Config (logging)
+
+
+---
+
+## 🛠️ Build & Run Locally
+
+**Requirements:**
 - Java 17+
-- Maven
+- Maven 3.8+
 
-Build:
+**Build:**
 ```bash
 mvn clean package
-```
 
-Run:
-```bash
 java -jar target/webhook-solver-0.0.1-SNAPSHOT.jar
-```
 
-Notes:
-- The project does NOT expose any HTTP controllers; the flow runs in `StartupRunner` on application startup.
-- If your real regNo ends with odd last-two digits, replace the placeholder SQL for Question 1 in `StartupRunner`.
-- The code stores solution files in the `output/` folder.
+🤖 GitHub Actions (Automatic Build)
 
-## Files included
-- Full source under `src/main/java/...`
-- `pom.xml`
-- `README.md`
+This repo includes GitHub Actions (.github/workflows/maven.yml) which:
 
-## What I produced
-This ZIP contains the full project source and README. You must run `mvn clean package` locally to produce the JAR. If you want, I can also attempt to build the JAR here — but building requires Maven being available in the environment.
+Builds the project with Maven
+
+Produces the JAR target/webhook-solver-0.0.1-SNAPSHOT.jar
+
+Uploads it as an artifact
+
+✅ How to Download the JAR (via Actions)
+
+Go to Actions → latest workflow run
+
+Scroll to Artifacts
+
+Download webhook-solver-jar (a ZIP)
+
+Inside the ZIP:
+webhook-solver-0.0.1-SNAPSHOT.jar
+
+🌍 Public Download Link
+
+For evaluators, the JAR is also published in Releases (as a ZIP).
+

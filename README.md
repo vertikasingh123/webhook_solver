@@ -62,4 +62,4 @@ webhook-solver-0.0.1-SNAPSHOT.jar
 🌍 Public Download Link
 
 For evaluators, the JAR is also published in Releases (as a ZIP).
-
+https://github.com/user-attachments/files/22038891/webhook-solver-jar.zip
